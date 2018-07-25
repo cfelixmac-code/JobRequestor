@@ -11,6 +11,7 @@ import com.cfelixmac.jobrequester.job.Job2;
 import com.cfelixmac.jobrequester.job.Job3;
 import com.cfelixmac.jobrequester.job.Job4;
 import com.cfelixmac.jobrequester.rxbus.RxBus;
+import com.cfelixmac.req.requester.BaseJob;
 import com.cfelixmac.req.requester.MxJobManager;
 import com.cfelixmac.req.requester.cache.CachePolicy;
 import com.cfelixmac.req.requester.event.ResultEvent;
@@ -24,6 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
+import static com.cfelixmac.req.requester.MxJobManagerKt.TYPE_PARALLEL;
 import static com.cfelixmac.req.requester.MxJobManagerKt.TYPE_SERIAL;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,21 +74,22 @@ public class MainActivity extends AppCompatActivity {
                 manager.sendJob(new Job1(api, "parallel_1", globalBus));
                 manager.sendJob(new Job2(api, "parallel_2", globalBus));
                 manager.sendJob(new Job3(api, "parallel_3", globalBus));
-                manager.sendJob(new Job4(api, "parallel_4", globalBus));
+                manager.sendJob(new Job4(api, "parallel_4", globalBus, new BaseJob.Config().type(TYPE_PARALLEL)));
                 break;
             case R.id.serial_action:
                 sb.append("  =Serial Requests,  Return Order: 4-3-2-1=  \n\n\n");
-                manager.sendJob(new Job4(api, "parallel_4", globalBus, TYPE_SERIAL));
-                manager.sendJob(new Job3(api, "parallel_3", globalBus, TYPE_SERIAL));
-                manager.sendJob(new Job2(api, "parallel_2", globalBus, TYPE_SERIAL));
-                manager.sendJob(new Job1(api, "parallel_1", globalBus, TYPE_SERIAL));
+                manager.sendJob(new Job4(api, "serial_4", globalBus, new BaseJob.Config().type(TYPE_SERIAL)));
+                manager.sendJob(new Job3(api, "serial_3", globalBus, TYPE_SERIAL));
+                manager.sendJob(new Job2(api, "serial_2", globalBus, TYPE_SERIAL));
+                manager.sendJob(new Job1(api, "serial_1", globalBus, TYPE_SERIAL));
                 break;
             case R.id.two_two_group_action:
                 sb.append("  =Group Requests,  Return Order: 1 before 2, 3 before 4=  \n\n\n");
                 manager.sendJob(new Job1(api, "group_a_1", globalBus, TYPE_SERIAL, CachePolicy.NO_CACHE, null, "a"));
                 manager.sendJob(new Job2(api, "group_a_2", globalBus, TYPE_SERIAL, CachePolicy.NO_CACHE, null, "a"));
                 manager.sendJob(new Job3(api, "group_b_1", globalBus, TYPE_SERIAL, CachePolicy.NO_CACHE, null, "b"));
-                manager.sendJob(new Job4(api, "group_b_2", globalBus, TYPE_SERIAL, CachePolicy.NO_CACHE, null, "b"));
+                manager.sendJob(new Job4(api, "group_b_2", globalBus,
+                        new BaseJob.Config().type(TYPE_SERIAL).cachePolicy(CachePolicy.NO_CACHE).group("b")));
                 break;
         }
     }
