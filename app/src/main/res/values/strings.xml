@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JobRequester</string>
+    <string name="cache_label_template"><![CDATA[<font color=#4BBCCF>[ CACHE : %1$s ]\n</font>]]></string>
+    <string name="title_template"><![CDATA[<font color=#9C353D>  ====%1$s====\n  %2$s\n\n\n</font>]]></string>
 </resources>

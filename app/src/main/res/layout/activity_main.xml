@@ -47,6 +47,37 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cache_update_serial_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="4 Jobs\nCache Update Serial"
+            android:textAllCaps="false"
+            android:textColor="#666"
+            android:textSize="13dp" />
+
+        <Button
+            android:id="@+id/cache_always_parallel_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="4 Jobs\nCache Always Parallel"
+            android:textAllCaps="false"
+            android:textColor="#666"
+            android:textSize="13dp" />
+
+
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
