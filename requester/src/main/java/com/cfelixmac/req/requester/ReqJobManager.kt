@@ -13,7 +13,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
 /**
- * RJobManager
+ * ReqJobManager
  * entry for all jobs to manage, should be singleton.
  *
  * @author cfelixmac at 2018.
@@ -112,10 +112,13 @@ class MxJobManager private constructor(private val context: Context, val cache: 
         when (type) {
             TYPE_PARALLEL -> {
                 parallelIdentifiers.add(identifier)
-                return parallelManager ?: JobManagerBuilder(context)
-                        .type(TYPE_PARALLEL)
-                        .maxParallelThreadsCount(DEFAULT_PARALLEL_THREADS_COUNT)
-                        .build()
+                if (parallelManager == null) {
+                    parallelManager = JobManagerBuilder(context)
+                            .type(TYPE_PARALLEL)
+                            .maxParallelThreadsCount(DEFAULT_PARALLEL_THREADS_COUNT)
+                            .build()
+                }
+                return parallelManager
             }
             TYPE_SERIAL -> {
                 val groupName: String = group ?: "DEFAULT_GROUP"

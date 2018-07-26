@@ -27,8 +27,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-import static com.cfelixmac.req.requester.MxJobManagerKt.TYPE_PARALLEL;
-import static com.cfelixmac.req.requester.MxJobManagerKt.TYPE_SERIAL;
+import static com.cfelixmac.req.requester.ReqJobManagerKt.TYPE_PARALLEL;
+import static com.cfelixmac.req.requester.ReqJobManagerKt.TYPE_SERIAL;
 
 public class MainActivity extends AppCompatActivity {
 
