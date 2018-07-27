@@ -15,7 +15,6 @@ import com.cfelixmac.jobrequester.rxbus.RxBus;
 import com.cfelixmac.req.requester.BaseJob;
 import com.cfelixmac.req.requester.ReqJobManager;
 import com.cfelixmac.req.requester.cache.CachePolicy;
-import com.cfelixmac.req.requester.event.CacheFailEvent;
 import com.cfelixmac.req.requester.event.ResultEvent;
 import com.google.gson.JsonElement;
 
@@ -54,17 +53,12 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         DaggerDemoComponent.create().inject(this);
 
-        ReqJobManager.create(this);
         manager = ReqJobManager.create(this, true);
 
-        disposable = globalBus.toObservable(ResultEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
+        disposable = globalBus.toObservable(ResultEvent.class).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultEvent>() {
                     @Override
                     public void accept(ResultEvent resultEvent) {
-                        switch (resultEvent.identifier){
-
-                        }
                         sb.append(getString(R.string.cache_label_template, String.valueOf(resultEvent.fromCache)));
                         sb.append(resultEvent.isSuccess ?
                                 (resultEvent.result != null ? getSimplifiedString(resultEvent.result.toString()) : "null") :
@@ -72,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
                         outputTextView.setText(Html.fromHtml(sb.toString().replace("\n", "<br/>")));
                     }
                 });
-        globalBus.toObservable(CacheFailEvent.class)
-                .subscribe()
     }
 
     @OnClick({R.id.parallel_action, R.id.serial_action, R.id.two_two_group_action, R.id.cache_update_serial_action, R.id.cache_always_parallel_action})

@@ -49,9 +49,11 @@ configurations.all {
 }
 ```
 
-###Usage
 
-##### Create Job Manager
+
+###Usage  
+
+#### Create Job Manager
 
 Create an instance of `ReqJobManager` by calling `ReqJobManager.create(..)`
 
@@ -63,7 +65,7 @@ Your own cache implementation needs to implement interface `ICache`
 
 `ReqJobManager` is recommended to be singleton in one application.
 
-##### Create Bus(Result Receiver)
+#### Create Bus(Result Receiver)
 
 implement `IBus` to get a bus as result receiver, implantation should be determined by user. 
 
@@ -75,7 +77,7 @@ For global requests, you can have a singleton instance to receive.
 
 For local request, like request current list's data, you can have a instance created in current activity.
 
-##### Create Jobs(requests)
+#### Create Jobs(requests)
 
 A job represents a requests. Extend `BaseJob` to create a job.
 
@@ -97,15 +99,15 @@ Here are details about each parameters in constructor.
 
 Inside your Job class, implement the request detail, like set parameters and execute REST request by other network library (Retrofit or any other lib you like~)
 
-##### Send jobs(execute)
+#### Send jobs(execute)
 
 If you don't use cache, just `reqJobManager.sendJob(job)`
 
 If you use cache, another parameter represents return data type is needed:
 
-``reqJobManager.sendJob(job, MyData.class)`
+`reqJobManager.sendJob(job, MyData.class)`
 
-##### Receive Results
+#### Receive Results
 
 Using `RxBus` as an example:
 
