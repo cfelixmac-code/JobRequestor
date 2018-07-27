@@ -1,5 +1,8 @@
 # JobRequestor
 
+[![Download](https://api.bintray.com/packages/cfelixw/maven/JobRequestor/images/download.svg) ](https://bintray.com/cfelixw/maven/JobRequestor/_latestVersion) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
+
 Job Requestor Android Library - Manage your network requests by jobs conveniently.   
 
 Support schedule requests parallelly or serially, you can also group requests and cache any request easily.  
@@ -130,6 +133,8 @@ If you want to get cache fail result, you can add the following codes:
 bus.toObservable(CacheFailEvent.class)
    .subscribe(......);
 ```
+
+demo usage is available in `app` module.
 
 ### Demo
 
