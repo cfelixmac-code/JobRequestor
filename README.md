@@ -51,7 +51,7 @@ configurations.all {
 
 
 
-###Usage  
+### Usage  
 
 #### Create Job Manager
 
@@ -133,7 +133,7 @@ bus.toObservable(CacheFailEvent.class)
 
 ### Demo
 
-
+![](https://raw.githubusercontent.com/cfelixw/JobRequestor/master/screen-record/screen_record.gif)
 
 ### License
 
