@@ -1,15 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 25
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion 14
+        targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
 
     buildTypes {
@@ -23,17 +25,42 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-
     api 'io.reactivex.rxjava2:rxjava:2.1.9'
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    api project(':jobqueue')
+    implementation 'com.squareup.okio:okio:1.14.0'
+
+    // use an old version since we only need a few util classes that were already there for a long
+    // time. If app depends on a newer one, gradle will pick it for us.
+    implementation 'com.android.support:support-v4:25.2.0'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
 
     implementation 'com.google.guava:guava:24.1-android'
     implementation 'com.google.code.gson:gson:2.8.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'JobRequestor'
+
+    publishedGroupId = 'com.cfelixmac.req.requester'
+    libraryName = 'JobRequestor'
+    artifact = 'jobrequestor'
+
+    libraryDescription = 'Android Job Requestor. Convenient Way to Manage Network Request by Jobs.'
+
+    siteUrl = 'https://github.com/cfelixw/JobRequestor'
+    gitUrl = 'https://github.com/cfelixw/JobRequestor.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'cfelixmac'
+    developerName = 'Felix W'
+
+    licenseName = 'The MIT License (MIT)'
+    licenseUrl = 'http://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
 }
+
+apply from: "../bintray.gradle"

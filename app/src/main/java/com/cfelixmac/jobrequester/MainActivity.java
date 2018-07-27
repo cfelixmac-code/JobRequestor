@@ -13,7 +13,7 @@ import com.cfelixmac.jobrequester.job.Job3;
 import com.cfelixmac.jobrequester.job.Job4;
 import com.cfelixmac.jobrequester.rxbus.RxBus;
 import com.cfelixmac.req.requester.BaseJob;
-import com.cfelixmac.req.requester.MxJobManager;
+import com.cfelixmac.req.requester.ReqJobManager;
 import com.cfelixmac.req.requester.cache.CachePolicy;
 import com.cfelixmac.req.requester.event.ResultEvent;
 import com.google.gson.JsonElement;
@@ -32,7 +32,7 @@ import static com.cfelixmac.req.requester.ReqJobManagerKt.TYPE_SERIAL;
 
 public class MainActivity extends AppCompatActivity {
 
-    MxJobManager manager;
+    ReqJobManager manager;
 
     @Inject
     RxBus globalBus;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         DaggerDemoComponent.create().inject(this);
 
-        manager = MxJobManager.create(this, true);
+        manager = ReqJobManager.create(this, true);
 
         disposable = globalBus.toObservable(ResultEvent.class).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultEvent>() {

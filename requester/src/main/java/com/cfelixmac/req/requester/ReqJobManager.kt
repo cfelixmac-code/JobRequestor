@@ -22,17 +22,17 @@ const val TYPE_UNDEFINED = 0
 const val TYPE_SERIAL = 1
 const val TYPE_PARALLEL = 2
 
-class MxJobManager private constructor(private val context: Context, val cache: ICache?) {
+class ReqJobManager private constructor(private val context: Context, val cache: ICache?) {
 
     companion object {
 
         @JvmStatic
         @JvmOverloads
-        fun create(context: Context, useCache: Boolean = false, cache: ICache? = null): MxJobManager {
+        fun create(context: Context, useCache: Boolean = false, cache: ICache? = null): ReqJobManager {
             if (useCache && cache == null) {
-                return MxJobManager(context, DefaultCacheImpl(context))
+                return ReqJobManager(context, DefaultCacheImpl(context))
             }
-            return MxJobManager(context, cache)
+            return ReqJobManager(context, cache)
         }
     }
 
