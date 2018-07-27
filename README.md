@@ -4,7 +4,9 @@ Job Requestor Android Library - Manage your network requests by jobs convenientl
 
 Support schedule requests parallelly or serially, you can also group requests and cache any request easily.  
 
-More features will be introduced below.
+**This library DOES NOT include any Network Request Library, it's a MANAGE/SCHEDULE library.**
+
+You can use other library like Retrofit to do the detail request work.
 
 ### Features
 
@@ -83,20 +85,49 @@ For Java, using `BaseJob.Config` in `BaseJob(id, bus, config, callback)` may be 
 
 Here are details about each parameters in constructor.  
 
+| Parameter   | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| identifier  | unique id, shouldn't be same as any other job                |
+| bus         | implementation of `IBus`, results receiver                   |
+| type        | `TYPE_SERIAL` or `TYPE_PARALLEL`                             |
+| cachePolicy | `CachePolicy.NO_CACHE`, `ALWAYS_CACHE`, `UPDATE_CACHE`,`ONLY_UPDATE` |
+| callback    | result callback, if not null, result will be returned by it. Bus receiver still works normally |
+| group       | group name. Jobs in same group should have same group name   |
+| priority    | higher priority can be executed sooner, only available when type is `TYPE_PARALLEL ` |
 
+Inside your Job class, implement the request detail, like set parameters and execute REST request by other network library (Retrofit or any other lib you like~)
 
-| Parameter  | Description                                   |
-| ---------- | --------------------------------------------- |
-| identifier | unique id, shouldn't be same as any other job |
-| bus        | implementation of IBus, results receiver      |
-|            |                                               |
-|            |                                               |
-|            |                                               |
-|            |                                               |
+##### Send jobs(execute)
 
+If you don't use cache, just `reqJobManager.sendJob(job)`
 
+If you use cache, another parameter represents return data type is needed:
 
+``reqJobManager.sendJob(job, MyData.class)`
 
+##### Receive Results
+
+Using `RxBus` as an example:
+
+```java
+bus.toObservable(ResultEvent.class).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultEvent>() {
+                    @Override
+                    public void accept(ResultEvent resultEvent) {
+                        switch (resultEvent.identifier){ 
+                            // use identifier distinguish different request
+                            // ...... .......
+                        }
+                    }
+                });
+```
+
+If you want to get cache fail result, you can add the following codes:
+
+```java
+bus.toObservable(CacheFailEvent.class)
+   .subscribe(......);
+```
 
 ### Demo
 
